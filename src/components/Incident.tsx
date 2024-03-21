@@ -10,22 +10,23 @@ const Incident: React.FC = () => {
         queryKey: ["incidents"],
         queryFn: () => fetchData()
     });
-
+    if (isLoading) {return <h1>Loading</h1>}
+    if (error) {throw Error}
     console.log("incidets", data)
-
-    if (isLoading) {
-        return <h1>Loading</h1>
-    }
-
-    if (error) {
-        throw Error
-    }
 
     return (
         <div className={styles.incidentContainer}>
             <h3 id={styles.carrier_name}>{data.carrier.carrier_name}</h3>
+            <button id={styles.incidentbtn}><h3>Incidents</h3></button>
             <Investigation data={data.data} />
             <Accident data={data.data}/>
+            <div>
+                <h3>Scores By Type</h3>
+                <div>
+                    <p>investigation93</p>
+                    <p>Accident File_93</p>
+                </div>
+            </div>
         </div>
     )
 }

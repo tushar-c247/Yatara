@@ -2,17 +2,22 @@ import React, { ReactNode, useState } from 'react'
 import IncidentContext from './incidentContext'
 
 interface IncidentStateProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const IncidentState: React.FC<IncidentStateProps> = (props) => {
-    const [state, setState] = useState<string>("test")
-    setState("new")
+  const [output, setOutput] = useState<number>(4)
+
+
+  const investigationOutpufunction = (investOutput: number): void => {
+    setOutput(investOutput)
+  }
+
   return (
     <div>
-        <IncidentContext.Provider value={state} >
-            {props.children}
-        </IncidentContext.Provider>
+      <IncidentContext.Provider value={{ output, investigationOutpufunction }} >
+        {props.children}
+      </IncidentContext.Provider>
     </div>
   )
 }

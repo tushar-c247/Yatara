@@ -1,3 +1,84 @@
-.AccidentContainer{
-    
+.AccidentContainer {
+  height: 870px;
+  // width: 98vw;
+  border: 1px solid #c6c4c4;
+  border-radius: 6px;
+  margin: 34px 46px 0px 27px;
+  max-width: 1007px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+#AccidentFile93 {
+  height: 45px;
+  width: 124%;
+  background-color: #103960;
+  color: white;
+}
+
+.answercommentdiv {
+    display: flex;
+    margin-left: 361px;
+    margin-top: 4px;
+    margin-bottom: -13px;
+  
+    #comment {
+      margin-left: 635px;
+    }
+}
+
+.dateFieldContainer {
+  display: flex;
+  margin-left: 350px;
+  margin-top:20px;
+
+  .dateField {
+    .date_input_filed {
+      height: 34px;
+      width: 126px;
+      margin-left: 11px;
+    }
+  }
+}
+
+.parentdivmap {
+  display: flex;
+
+  .question {
+    background-color: white;
+    height: 80%;
+    width: 39%;
+    margin-left: 19px;
+    margin-top: 17px;
+
+    .questionUl {
+      list-style: none;
+      display: flex;
+
+      #qusli {
+        margin-right: 14px;
+        width: 38px;
+      }
+
+      #questionli {
+        width: 279px;
+      }
+    }
+  }
+
+  .accidentDropdown {
+    // height: 23px;
+    margin-left: 10px;
+    margin-top: 20px;
+
+    #dropdownselect {
+      height: 34px;
+      width: 130px;
+    }
+  }
+
+  .accidentComment {
+    margin-top: 20px;
+    margin-left: 18px;
+  }
 }
