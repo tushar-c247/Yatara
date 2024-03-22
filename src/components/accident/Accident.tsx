@@ -1,13 +1,13 @@
 import React from "react";
-import { Incident } from "./Investigation";
-import { Data } from "./Investigation";
-import styles from "../styles/Accident.module.scss";
+import { Incident } from "../Investigation";
+import { Data } from "../Investigation";
+import styles from "../../styles/Accident.module.scss";
 
-const Accident: React.FC<{ data: Data }> = (props) => {
-    const { data } = props;
+const Accident: React.FC<{ data: Data, accidentHandleChange: any}> = (props) => {
+    const { data, accidentHandleChange} = props;
 
     return (
-        <div className={styles.AccidentContainer}>
+        <div className={styles.AccidentContainer}> 
             <h2 id={styles.AccidentFile93}>Accident File_93</h2>
             <div className={styles.answercommentdiv}>
                 <h3 id={styles.answer}>Answer?</h3>
@@ -21,24 +21,23 @@ const Accident: React.FC<{ data: Data }> = (props) => {
                     </div>
                 ))}
             </div>
-            {data?.["accident files_93"].map((item: Incident, index: number) => (
-                <div key={index} className={styles.parentdivmap}>
+            {data?.["accident files_93"].map((item: Incident, questionindex: number) => (
+                <div key={questionindex} className={styles.parentdivmap}>
                     <div className={styles.question}>
                         <ul className={styles.questionUl} key={item.id}>
-                            <li id={styles.qusli} >Q-{index + 1}.</li><li id={styles.questionli}>{item.question}</li>
+                            <li id={styles.qusli} >Q-{questionindex + 1}.</li><li id={styles.questionli}>{item.question}</li>
                         </ul>
                     </div>
-                    {[...Array(item.max)].map((_, index) => (
-                        <div key={index} className={styles.accidentDropdown}>
+                    {[...Array(item.max)].map((_, fieldindex) => (
+                        <div key={fieldindex} className={styles.accidentDropdown}>
                             <form action="">
-                                <select id={styles.dropdownselect} name="cars">
+                                <select id={styles.dropdownselect} onChange={(e) => accidentHandleChange(e, questionindex, fieldindex)}>
                                     <option value="" disabled selected hidden>
                                         Select Answer{" "}
                                     </option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                    <option value="partial">Partial</option>
-                                    <option value="n/a">N/A</option>
+                                    <option value={`${item.weight/5}`}>Yes</option>
+                                    <option value={0}>No</option>
+                                    <option value={0}>N/A</option>
                                 </select>
                             </form>
                         </div>

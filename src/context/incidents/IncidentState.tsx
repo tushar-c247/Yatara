@@ -6,16 +6,15 @@ interface IncidentStateProps {
 }
 
 const IncidentState: React.FC<IncidentStateProps> = (props) => {
-  const [output, setOutput] = useState<number>(4)
-
+  const [investigationOutput, setInvestigationOutput] = useState<number>(0.00)
 
   const investigationOutpufunction = (investOutput: number): void => {
-    setOutput(investOutput)
+    setInvestigationOutput(investOutput)
   }
 
   return (
     <div>
-      <IncidentContext.Provider value={{ output, investigationOutpufunction }} >
+      <IncidentContext.Provider value={{ investigationOutput, investigationOutpufunction }} >
         {props.children}
       </IncidentContext.Provider>
     </div>

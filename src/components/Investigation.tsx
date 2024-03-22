@@ -19,7 +19,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
     const { data } = props
     const context =  useContext(IncidentContext)
     const {investigationOutpufunction} = context
-    const [selectedValue, setSelectedValue] = useState<(number)[]>([]);
+    const [selectedValue, setSelectedValue] = useState<(number)[]>([]); 
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>, index: number) => {
         const updatedValue = [...selectedValue];
@@ -27,23 +27,27 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
         setSelectedValue(updatedValue)
         console.log("updated value", updatedValue)
     }
+
     console.log("selectedvalue", selectedValue)
 
-    const totalValue = selectedValue.reduce((acc: number, value: number) =>
-        acc + value, 0
-    );
+    const totalValue = selectedValue.reduce((acc: number, value: number) =>{
+        if(value !== undefined){
+            return acc + value
+        }
+        return acc
+        },0);
     console.log("totalValue", totalValue)
 
     const totalWeight = selectedValue.reduce((acc, value, index) => {
         const weight = value;
-        if (weight !== 0) {
+        if (weight !== undefined){
             return acc + (data.investigation93[index]?.weight)
         }
         return acc
     }, 0);
     console.log("totalweight", totalWeight)
 
-    const investigationOutput = totalValue != 0 && totalWeight !== 0 ? (totalValue / totalWeight * 100).toFixed(2) : 0;
+    const investigationOutput = totalValue != 0 && totalWeight !== 0 ? (totalValue / totalWeight * 100).toFixed(2) : 0.00;
     console.log("output", investigationOutput)
 
     investigationOutpufunction(investigationOutput)

@@ -1,22 +1,45 @@
-.incidentContainer{
-    height: 100vh;
-    width: 100vw;
-    margin: 1px;
+.incidentContainer {
+  height: 100vh;
+  width: 100vw;
+  margin: 1px;
 }
 
-#carrier_name{   
-    height: 30px;
-    width: 100vw;
-    background-color: #103960;
-    color: white;
+#carrier_name {
+  height: 30px;
+  width: 100vw;
+  background-color: #103960;
+  color: white;
 }
 
-#incidentbtn{
-    background-color: #5db4ff;
-    color: white;
-    height: 30px;
-    width: 126px;
-    margin-top: 15px;
-    margin-bottom: 18px;
-    margin-left: 27px;
+#incidentbtn {
+  background-color: #5db4ff;
+  color: white;
+  height: 30px;
+  width: 126px;
+  margin-top: 15px;
+  margin-bottom: 18px;
+  margin-left: 27px;
+}
+#headingScore {
+  margin: 42px 0px 0px 30px;
+}
+.scoreDisplay {
+  background-color: #f7f7f7;
+  width: 30%;
+  height: 22%;
+  border: 1px solid #c6c4c4;
+  border-radius: 9px;
+  margin: 6px 0px 0px 29px;
+
+  #investigationScore {
+    margin: 12px 0px 5px 10px;
+  }
+
+  #accidentScore {
+    margin: 3px 0px 28px 10px;
+  }
+
+  #totalScore{
+    margin: 14px 0px 0px 10px;
+  }
 }
