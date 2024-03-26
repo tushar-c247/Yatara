@@ -18,12 +18,22 @@ export interface Data {
 const Investigation: React.FC<{ data: Data }> = (props) => {
     const { data } = props;
     const context = useContext(IncidentContext);
-    const { investigationOutpufunction } = context;
-    const [selectedValues, setSelectedValues] = useState<{ id: number; value: number }[]>([]);
+    const { investigationOutputFunction } = context;
+    const [selectedValues, setSelectedValues] = useState<{ id: number; value: number | string | any }[]>([]);
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>, index: number, id: number) => {
+        // const {value} = e.target
+        // if(value === "cancel"){ 
+        //     const updatedValue = selectedValues.filter((item) => item.id !== id);
+        //     setSelectedValues(updatedValue)
+        // }
         const updatedValues = [...selectedValues];
-        updatedValues[index] = { id, value: Number(e.target.value) };
+        if (e.target.value == "N/A") {
+            updatedValues[index] = { id, value: e.target.value };
+        }
+        else {
+            updatedValues[index] = { id, value: Number(e.target.value) };
+        }
         setSelectedValues(updatedValues);
         console.log("updated values", updatedValues);
     };
@@ -31,7 +41,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
     console.log("selected values", selectedValues);
 
     const totalValue = selectedValues.reduce((acc: number, currentValue) => {
-        if (currentValue !== undefined) {
+        if (currentValue !== undefined && !isNaN(currentValue.value)) {
             return acc + currentValue.value
         }
         return acc
@@ -40,10 +50,9 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
     console.log("total value", totalValue);
 
     const totalWeight = selectedValues.reduce((acc, currentValue) => {
-        if (currentValue !== undefined) {
-            const {id} = currentValue
+        if (currentValue !== undefined && !isNaN(currentValue.value)) {
+            const { id } = currentValue
             const incident = data.investigation93.find(incident => incident.id === id);
-            // console.log("incident", incident)
             return acc + (incident?.weight || 0);
         }
         return acc;
@@ -54,7 +63,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
         totalValue !== 0 && totalWeight !== 0 ? ((totalValue / totalWeight) * 100).toFixed(2) : 0;
     console.log("output", investigationOutput);
 
-    investigationOutpufunction(investigationOutput);
+    investigationOutputFunction(investigationOutput);
 
     return (
         <div className={styles.investigationContainer}>
@@ -74,14 +83,14 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
                         </div>
                         <div className={styles.investigationDropdown}>
                             <form action="">
-                                <select id={styles.dropdownselect} onChange={(e) => handleChange(e, index, item.id)}>
-                                    <option value="" disabled selected hidden>
+                                <select id={styles.dropdownselect} defaultValue="" onChange={(e) => handleChange(e, index, item.id)}>
+                                    <option value="" disabled hidden>
                                         Select Answer
                                     </option>
                                     <option value={`${item.weight}`}>Yes</option>
-                                    <option value="0">No</option>
+                                    <option value={0}>No</option>
                                     <option value={`${item.weight / 2}`}>Partial</option>
-                                    <option value="0">N/A</option>
+                                    <option value="N/A">N/A</option>
                                 </select>
                             </form>
                         </div>

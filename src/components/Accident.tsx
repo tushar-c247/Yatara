@@ -1,10 +1,10 @@
-import React, {useContext, useState, ChangeEvent} from "react";
-import { Incident } from "../Investigation";
-import { Data } from "../Investigation";
-import styles from "../../styles/Accident.module.scss";
-import IncidentContext from '../../context/incidents/incidentContext';
+import React, { useContext, useState, ChangeEvent } from "react";
+import { Incident } from "./Investigation";
+import { Data } from "./Investigation";
+import styles from "../styles/Accident.module.scss";
+import IncidentContext from '../context/incidents/incidentContext';
 
-const Accident: React.FC<{ data: Data}> = (
+const Accident: React.FC<{ data: Data }> = (
     props
 ) => {
     const { data } = props;
@@ -17,32 +17,31 @@ const Accident: React.FC<{ data: Data}> = (
         const updatedValue = [...dropDownvalue];
         if (!Array.isArray(updatedValue[questionIndex])) {
             updatedValue[questionIndex] = [];
-          }
+        }
         updatedValue[questionIndex][fieldIndex] = Number(e.target.value);
         setDropDownvalue(updatedValue);
-
         console.log("updatedValue", updatedValue);
-    }
+    }                                                                                                                                                                                                                           
 
     console.log("Dropdownvalue", dropDownvalue);
 
     let totalValueAccident: number = 0;
-    dropDownvalue.forEach((item) => {
-        if (item) {
+    let totalWeightAccident: number = 0;
+    dropDownvalue.forEach((item, index) => {
+        if (item !== undefined) {
+            item.forEach(()=>{
+            totalWeightAccident += (data?.["accident files_93"][index]?.weight/5) 
+        })
+        }
+        if (item){
             item.forEach((value: number) => {
                 totalValueAccident += value;
             });
         }
     });
+    
     console.log("totalValueAccident", totalValueAccident);
-
-    let totalWeightAccident: number = 0;
-    dropDownvalue.forEach((item, index) => {
-        if (item !== undefined) {
-            totalWeightAccident += (data?.["accident files_93"][index]?.weight)
-        }
-    })
-    console.log("totalWeightAccident", totalWeightAccident)
+    console.log("totalWeightAccident", totalWeightAccident);
 
 
     const Result_Accidetal_File = totalValueAccident !== 0 || totalWeightAccident !== 0 ? (totalValueAccident / totalWeightAccident * 100).toFixed(2) : 0
