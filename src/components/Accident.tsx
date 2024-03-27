@@ -21,7 +21,7 @@ const Accident: React.FC<{ data: Data }> = (
         updatedValue[questionIndex][fieldIndex] = Number(e.target.value);
         setDropDownvalue(updatedValue);
         console.log("updatedValue", updatedValue);
-    }                                                                                                                                                                                                                           
+    }
 
     console.log("Dropdownvalue", dropDownvalue);
 
@@ -29,17 +29,15 @@ const Accident: React.FC<{ data: Data }> = (
     let totalWeightAccident: number = 0;
     dropDownvalue.forEach((item, index) => {
         if (item !== undefined) {
-            item.forEach(()=>{
-            totalWeightAccident += (data?.["accident files_93"][index]?.weight/5) 
-        })
-        }
-        if (item){
             item.forEach((value: number) => {
-                totalValueAccident += value;
-            });
+                if (!isNaN(value)) {
+                    totalWeightAccident += (data?.["accident files_93"][index]?.weight / 5)
+                    totalValueAccident += value;
+                }
+            })
         }
     });
-    
+
     console.log("totalValueAccident", totalValueAccident);
     console.log("totalWeightAccident", totalWeightAccident);
 
@@ -58,7 +56,7 @@ const Accident: React.FC<{ data: Data }> = (
             <div className={styles.dateFieldContainer}>
                 {[...Array(5)].map((_, index) => (
                     <div key={index} className={styles.dateField}>
-                        <b style={{ margin: "0px 0px 0px 10px" }}>Yes</b>
+                        <b id={styles.yesIcon}>Yes</b>
                         <input className={styles.date_input_filed} type="date" />
                     </div>
                 ))}
@@ -80,13 +78,13 @@ const Accident: React.FC<{ data: Data }> = (
                                         onChange={(e) =>
                                             accidentHandleChange(e, questionindex, fieldindex)
                                         }
-                                    >
+                                    >   
                                         <option value="" disabled selected hidden>
-                                            Select Answer
+                                            Select Answer 
                                         </option>
                                         <option value={`${item.weight / 5}`}>Yes</option>
                                         <option value={0}>No</option>
-                                        <option value={0}>N/A</option>
+                                        <option value="N/A">N/A</option>
                                     </select>
                                 </form>
                             </div>

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styles from "../styles/Investigation.module.scss";
 import { useState, ChangeEvent } from 'react';
 import IncidentContext from '../context/incidents/incidentContext';
+import { CloseOutlined } from '@ant-design/icons';
 
 export interface Incident {
     id: number;
@@ -22,11 +23,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
     const [selectedValues, setSelectedValues] = useState<{ id: number; value: number | string | any }[]>([]);
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>, index: number, id: number) => {
-        // const {value} = e.target
-        // if(value === "cancel"){ 
-        //     const updatedValue = selectedValues.filter((item) => item.id !== id);
-        //     setSelectedValues(updatedValue)
-        // }
+        
         const updatedValues = [...selectedValues];
         if (e.target.value == "N/A") {
             updatedValues[index] = { id, value: e.target.value };
@@ -38,6 +35,12 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
         console.log("updated values", updatedValues);
     };
 
+    const handleCancel = (id: number, e: any) => {
+        e.preventDefault()
+        const updatedValues = selectedValues.filter(value => value.id !== id);
+        setSelectedValues(updatedValues);
+    };
+    
     console.log("selected values", selectedValues);
 
     const totalValue = selectedValues.reduce((acc: number, currentValue) => {
@@ -92,6 +95,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
                                     <option value={`${item.weight / 2}`}>Partial</option>
                                     <option value="N/A">N/A</option>
                                 </select>
+                                {selectedValues.some(value => value.id === item.id)  &&( <button onClick={(e) => handleCancel(item.id, e)} id={styles.cancelbtn}><CloseOutlined /></button>)}
                             </form>
                         </div>
                         <div className={styles.investigationComment}>
