@@ -9,7 +9,7 @@ const IncidentState: React.FC<IncidentStateProps> = (props) => {
   const [investigationOutput, setInvestigationOutput] = useState<number>(0.00)
   const [accidentOutput, setAccidentOutput] = useState<number>(0.00)
 
-  const investigationOutpufunction = (investOutput: number): void => {
+  const investigationOutputFunction = (investOutput: number): void => {
     setInvestigationOutput(investOutput)
   }
 
@@ -21,7 +21,7 @@ const IncidentState: React.FC<IncidentStateProps> = (props) => {
 
   return (
     <div>
-      <IncidentContext.Provider value={{ accidentOutput, investigationOutput, investigationOutpufunction, accidentOutputFun }} >
+      <IncidentContext.Provider value={{ accidentOutput, investigationOutput, investigationOutputFunction, accidentOutputFun }} >
         {props.children}
       </IncidentContext.Provider>
     </div>
