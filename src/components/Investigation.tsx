@@ -22,8 +22,9 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
     const { investigationOutputFunction } = context;
     const [selectedValues, setSelectedValues] = useState<{ id: number; value: number | string | any }[]>([]);
 
+
     const handleChange = (e: ChangeEvent<HTMLSelectElement>, index: number, id: number) => {
-        
+
         const updatedValues = [...selectedValues];
         if (e.target.value == "N/A") {
             updatedValues[index] = { id, value: e.target.value };
@@ -40,7 +41,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
         const updatedValues = selectedValues.filter(value => value.id !== id);
         setSelectedValues(updatedValues);
     };
-    
+
     console.log("selected values", selectedValues);
 
     const totalValue = selectedValues.reduce((acc: number, currentValue) => {
@@ -86,7 +87,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
                         </div>
                         <div className={styles.investigationDropdown}>
                             <form action="">
-                                <select id={styles.dropdownselect} defaultValue="" onChange={(e) => handleChange(e, index, item.id)}>
+                                <select id={styles.dropdownselect} value={selectedValues.some(value => value?.id === item?.id) ? selectedValues.find(value => value?.id === item?.id)?.value : ""} defaultValue="" onChange={(e) => handleChange(e, index, item.id)}>
                                     <option value="" disabled hidden>
                                         Select Answer
                                     </option>
@@ -95,7 +96,7 @@ const Investigation: React.FC<{ data: Data }> = (props) => {
                                     <option value={`${item.weight / 2}`}>Partial</option>
                                     <option value="N/A">N/A</option>
                                 </select>
-                                {selectedValues.some(value => value.id === item.id)  &&( <button onClick={(e) => handleCancel(item.id, e)} id={styles.cancelbtn}><CloseOutlined /></button>)}
+                                {selectedValues.some(value => value?.id === item?.id) && (<button onClick={(e) => handleCancel(item.id, e)} id={styles.cancelbtn}><CloseOutlined /></button>)}
                             </form>
                         </div>
                         <div className={styles.investigationComment}>
