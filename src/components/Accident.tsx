@@ -1,10 +1,10 @@
-import React, {useContext, useState, ChangeEvent} from "react";
-import { Incident } from "../Investigation";
-import { Data } from "../Investigation";
-import styles from "../../styles/Accident.module.scss";
-import IncidentContext from '../../context/incidents/incidentContext';
+import React, { useContext, useState, ChangeEvent } from "react";
+import { Incident } from "./Investigation";
+import { Data } from "./Investigation";
+import styles from "../styles/Accident.module.scss";
+import IncidentContext from '../context/incidents/incidentContext';
 
-const Accident: React.FC<{ data: Data}> = (
+const Accident: React.FC<{ data: Data }> = (
     props
 ) => {
     const { data } = props;
@@ -17,32 +17,29 @@ const Accident: React.FC<{ data: Data}> = (
         const updatedValue = [...dropDownvalue];
         if (!Array.isArray(updatedValue[questionIndex])) {
             updatedValue[questionIndex] = [];
-          }
+        }
         updatedValue[questionIndex][fieldIndex] = Number(e.target.value);
         setDropDownvalue(updatedValue);
-
         console.log("updatedValue", updatedValue);
     }
 
     console.log("Dropdownvalue", dropDownvalue);
 
     let totalValueAccident: number = 0;
-    dropDownvalue.forEach((item) => {
-        if (item) {
-            item.forEach((value: number) => {
-                totalValueAccident += value;
-            });
-        }
-    });
-    console.log("totalValueAccident", totalValueAccident);
-
     let totalWeightAccident: number = 0;
     dropDownvalue.forEach((item, index) => {
         if (item !== undefined) {
-            totalWeightAccident += (data?.["accident files_93"][index]?.weight)
+            item.forEach((value: number) => {
+                if (!isNaN(value)) {
+                    totalWeightAccident += (data?.["accident files_93"][index]?.weight / 5)
+                    totalValueAccident += value;
+                }
+            })
         }
-    })
-    console.log("totalWeightAccident", totalWeightAccident)
+    });
+
+    console.log("totalValueAccident", totalValueAccident);
+    console.log("totalWeightAccident", totalWeightAccident);
 
 
     const Result_Accidetal_File = totalValueAccident !== 0 || totalWeightAccident !== 0 ? (totalValueAccident / totalWeightAccident * 100).toFixed(2) : 0
@@ -59,7 +56,7 @@ const Accident: React.FC<{ data: Data}> = (
             <div className={styles.dateFieldContainer}>
                 {[...Array(5)].map((_, index) => (
                     <div key={index} className={styles.dateField}>
-                        <b style={{ margin: "0px 0px 0px 10px" }}>Yes</b>
+                        <b id={styles.yesIcon}>Yes</b>
                         <input className={styles.date_input_filed} type="date" />
                     </div>
                 ))}
@@ -81,13 +78,13 @@ const Accident: React.FC<{ data: Data}> = (
                                         onChange={(e) =>
                                             accidentHandleChange(e, questionindex, fieldindex)
                                         }
-                                    >
+                                    >   
                                         <option value="" disabled selected hidden>
-                                            Select Answer
+                                            Select Answer 
                                         </option>
                                         <option value={`${item.weight / 5}`}>Yes</option>
                                         <option value={0}>No</option>
-                                        <option value={0}>N/A</option>
+                                        <option value="N/A">N/A</option>
                                     </select>
                                 </form>
                             </div>

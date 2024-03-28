@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchData } from "../api/FetchData"
-import Investigation from './Investigation'
 import styles from "../styles/Incident.module.scss"
 import IncidentContext from '../context/incidents/incidentContext'
-// import Accident_Calculation from './accident/Accident_Calculation'
-import Accident from './accident/Accident'
+import Investigation from './Investigation'
+import Accident from './Accident'
 
 const Incident: React.FC = () => {
     const context = useContext(IncidentContext)
@@ -25,7 +24,6 @@ const Incident: React.FC = () => {
             <button id={styles.incidentbtn}><h3>Incidents</h3></button>
             <Investigation data={data.data} />
             <Accident data={data.data} />
-            {/* <Accident_Calculation data={data.data} /> */}
 
             <h3 id={styles.headingScore}>Scores By Type</h3>
             <div className={styles.scoreDisplay}>
